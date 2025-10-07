@@ -14,10 +14,10 @@ public class Main {
         System.out.println("Длина v2 = " + v2.length());
 
         // Скалярное произведение
-        System.out.println("Скалярное произведение v1·v2 = " + v1.scalarProduct(v2));
+        System.out.println("Скалярное произведение v1 · v2 = " + v1.scalarProduct(v2));
 
         // Векторное произведение
-        System.out.println("Векторное произведение v1×v2 = " + v1.cross(v2));
+        System.out.println("Векторное произведение v1 × v2 = " + v1.cross(v2));
 
         // Косинус угла
         System.out.println("cos(угла) между v1 и v2 = " + v1.angleCos(v2));

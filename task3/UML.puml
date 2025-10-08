@@ -1,0 +1,177 @@
+@startuml
+interface org.example.Operable {
+~ void start()
+~ void stop()
+}
+
+abstract class org.example.WaterTransport {
+# <<Create>> WaterTransport(String,int)
++ String category()
+}
+
+abstract class org.example.Transport {
+# String model
+# int capacity
+# <<Create>> Transport(String,int)
++ {abstract}String category()
++ {abstract}String info()
+# String basicInfo()
++ String toString()
+}
+
+
+class org.example.Engine {
+- EngineType type
+- FuelType fuel
+- int horsepower
+- boolean running
++ <<Create>> Engine(EngineType,FuelType,int)
++ void start()
++ void stop()
++ boolean isRunning()
++ EngineType getType()
++ FuelType getFuel()
++ int getHorsepower()
++ String toString()
+}
+
+
+class org.example.Wheel {
+- int diameter
++ <<Create>> Wheel(int)
++ int getDiameter()
++ String toString()
+}
+
+
+class org.example.Airplane {
+- Engine engine
+- int tank
+- int fuel
++ <<Create>> Airplane(String,int)
++ String info()
++ Engine getEngine()
++ int getFuelLevel()
++ int getFuelCapacity()
++ void setFuelLevel(int)
+}
+
+
+enum org.example.EngineType {
++  PETROL
++  DIESEL
++  ELECTRIC
++  TURBOPROP
++  TURBOJET
+}
+
+interface org.example.Refuelable {
+~ void refuel(int)
+~ int fuelLevel()
+~ int fuelCapacity()
+}
+
+class org.example.Motorcycle {
+- Engine engine
+- Wheel wheel
+- int tank
+- int fuel
++ <<Create>> Motorcycle(String,int)
++ String info()
++ Engine getEngine()
++ int getFuelLevel()
++ int getFuelCapacity()
++ void setFuelLevel(int)
+}
+
+
+abstract class org.example.AirTransport {
+# <<Create>> AirTransport(String,int)
++ String category()
+}
+
+interface org.example.EnginePowered {
+~ Engine getEngine()
+~ int getFuelLevel()
+~ int getFuelCapacity()
+~ void setFuelLevel(int)
+~ void start()
+~ void stop()
+~ void refuel(int)
+~ int fuelLevel()
+~ int fuelCapacity()
+}
+
+class org.example.Car {
+- Engine engine
+- Wheel wheel
+- int tank
+- int fuel
++ <<Create>> Car(String,int)
++ String info()
++ Engine getEngine()
++ int getFuelLevel()
++ int getFuelCapacity()
++ void setFuelLevel(int)
+}
+
+
+class org.example.Bicycle {
+- Wheel wheel
+- boolean moving
++ <<Create>> Bicycle(String)
++ String info()
++ void start()
++ void stop()
+}
+
+
+enum org.example.FuelType {
++  GASOLINE
++  DIESEL
++  KEROSENE
++  ELECTRIC
+}
+
+abstract class org.example.GroundTransport {
+# int wheels
+# <<Create>> GroundTransport(String,int,int)
++ String category()
+}
+
+
+class org.example.Main {
++ {static} void main(String[])
+}
+
+class org.example.Boat {
+- Engine engine
+- int tank
+- int fuel
++ <<Create>> Boat(String,int)
++ String info()
++ Engine getEngine()
++ int getFuelLevel()
++ int getFuelCapacity()
++ void setFuelLevel(int)
+}
+
+
+
+
+org.example.Transport <|-- org.example.WaterTransport
+org.example.EnginePowered <|.. org.example.Airplane
+org.example.AirTransport <|-- org.example.Airplane
+org.example.EnginePowered <|.. org.example.Motorcycle
+org.example.GroundTransport <|-- org.example.Motorcycle
+org.example.Transport <|-- org.example.AirTransport
+org.example.Operable <|-- org.example.EnginePowered
+org.example.Refuelable <|-- org.example.EnginePowered
+org.example.EnginePowered <|.. org.example.Car
+org.example.GroundTransport <|-- org.example.Car
+org.example.Operable <|.. org.example.Bicycle
+org.example.GroundTransport <|-- org.example.Bicycle
+org.example.Transport <|-- org.example.GroundTransport
+org.example.EnginePowered <|.. org.example.Boat
+org.example.WaterTransport <|-- org.example.Boat
+@enduml

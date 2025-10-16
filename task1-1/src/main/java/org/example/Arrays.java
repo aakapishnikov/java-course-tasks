@@ -44,7 +44,7 @@ public class Arrays {
                 System.out.println("Массив отсортированный по возрастанию:" + java.util.Arrays.toString(sortAscending(doubleArray)));
                 System.out.println("Массив отсортированный по убыванию:" + java.util.Arrays.toString(sortDescending(doubleArray)));
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             System.err.println("Произошла ошибка: " + e.getMessage());
         }
     }
@@ -123,7 +123,7 @@ public class Arrays {
 
                 return new double[]{lower, upper};
 
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 System.out.println("Ошибка: некорректный формат чисел");
             }
         }

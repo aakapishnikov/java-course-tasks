@@ -10,7 +10,7 @@ public class Main {
         // но в случае функционального интерфейса такая реализация будет более громоздкой, чем лямбды.
         sb.addObserver((src, action) -> System.out.println("Событие: " + action + " | Значение: '" + src.toString() + "'"));
         sb.addObserver((src, action) -> {
-            if (src.length() == 0) {
+            if (src.isEmpty()) {
                 System.out.println("Внимание: после операции " + action + " строка пустая");
             }
         });

@@ -26,7 +26,6 @@ public class Main {
         sb.replace(0, 6, "Прекрасное");
         sb.deleteCharAt(sb.length() - 1);
         sb.reverse();
-        String str = new String();
 
         // Очистим строку, чтобы проверить работу второго наблюдателя
         sb.setLength(0);

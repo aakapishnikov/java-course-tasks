@@ -85,7 +85,7 @@ public class ObservableStringBuilder implements CharSequence, Appendable {
         for (var o : List.copyOf(observers)) {
             try {
                 o.onChange(this, action);
-            } catch (RuntimeException ex) {
+            } catch (RuntimeException _) {
                 // игнорируем ошибки подписчиков, чтобы не ломать работу остальных
             }
         }

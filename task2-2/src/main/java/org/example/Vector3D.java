@@ -85,6 +85,7 @@ public final class Vector3D extends BaseVector3D {
     private final double x;
     private final double y;
     private final double z;
+    private static final Random rnd = new Random();
 
     // Конструктор
     public Vector3D(double x, double y, double z) {
@@ -126,7 +127,6 @@ public final class Vector3D extends BaseVector3D {
     public static Vector3D[] randomArray(int n) {
         if (n < 0) throw new IllegalArgumentException("N должно быть >= 0");
         Vector3D[] vectors = new Vector3D[n];
-        Random rnd = new Random();
         for (int i = 0; i < n; i++) {
             // Для красоты используем диапазон [-100; 100] и целочисленные значения
             double rx = rnd.nextInt(-100,100);

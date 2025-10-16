@@ -3,6 +3,20 @@ package org.example;
 import java.util.Scanner;
 
 /**
+ * Основываясь на задании после первого занятия, переписать консольный калькулятор с использованием
+ * принципов объектно-ориентированного программирования (ООП). Калькулятор должен поддерживать
+ * основные арифметические операции. Создать отдельный класс калькулятора, а также класс операции, и
+ * его наследников, которые будут представлять конкретную реализацию операции (например Addition
+ * extends Operation и т. д.). Объект калькулятора должен иметь метод по вычислению операции. Класс
+ * операции должен иметь поля - операнды и метод, который возвращает результат операции.
+ * Требования:
+ * Соответствие принципам ООП
+ * Грамотное использование наследования
+ * Инкапсуляция деталей работы с классом калькулятора
+ * Также опционально можно создать отдельный класс, в котором будет содержаться логика
+ * валидации выражения (валидатор).
+ * Консольный интерфейс не должен претерпеть сильных изменений в сравнении с 1 заданием
+ *
  * Переработанный калькулятор с поддержкой операций [+, -, *, /, //, ^, %] и поддержкой отрицательных чисел.
  * Программа запрашивает у пользователя ввод выражений в формате "число операция число".
  * Работает в цикле до ввода "exit".
@@ -13,13 +27,11 @@ public class CalculatorOOP {
         Calculator calculator = new Calculator();
         ExpressionValidator validator = new ExpressionValidator();
 
-        // Выводим информацию о поддерживаемых операциях
-        System.out.println("Простой калькулятор. Поддерживаемые операции:");
-        System.out.println("+  -  *  /  //  ^  %");
-        System.out.println("Введите выражение (например: -15 + -29) или 'exit' для выхода.");
+        // Вывод приветствия
+        printGreetings();
 
         while (true) {
-            System.out.print("> ");
+            System.out.print("Введите выражение: ");
             String line = in.nextLine().trim();
 
             if (line.equalsIgnoreCase("exit")) {
@@ -34,14 +46,27 @@ public class CalculatorOOP {
                 double result = calculator.calculate(op);
                 // Вывод (отсекаем .0 при целочисленном результате)
                 System.out.println("Результат: " + formatNumber(result));
-            } catch (ValidationException ve) {
+            } catch (ValidationException _) {
                 System.out.println("Неверное выражение. Введите еще раз:");
             } catch (ArithmeticException ae) {
                 System.out.println(ae.getMessage()); // Ошибка деления на 0 или другие арифметические ошибки
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println("Непредвиденная ошибка: " + e.getMessage());
             }
         }
+    }
+
+    private static void printGreetings() {
+        System.out.println("Консольный калькулятор\nПоддерживаются операции с двумя операндами.");
+        System.out.println("Допустимые операции:");
+        System.out.println("+  - сложение");
+        System.out.println("-  - вычитание");
+        System.out.println("*  - умножение");
+        System.out.println("/  - деление");
+        System.out.println("// - целочисленное деление");
+        System.out.println("^  - возведение в степень");
+        System.out.println("%  - остаток от деления");
+        System.out.println("Пример ввода, '-15 + -29'\nДля выхода введите 'exit'");
     }
 
     private static String formatNumber(double x) {
@@ -150,7 +175,7 @@ class IntDivision extends Operation {
         long a = toLongExact(left, "Для // требуется целое число слева.");
         long b = toLongExact(right, "Для // требуется целое число справа.");
         if (b == 0) throw new ArithmeticException("Ошибка - целочисленное деление на 0.");
-        return a / b;
+        return  a / b;
     }
 
     private static long toLongExact(double x, String err) {
@@ -196,7 +221,7 @@ class Modulus extends Operation {
 /**
  * Исключение для ошибок валидации выражения.
  */
-class ValidationException extends RuntimeException {
+class ValidationException extends Exception {
     public ValidationException(String msg) {
         super(msg);
     }
@@ -206,7 +231,7 @@ class ValidationException extends RuntimeException {
  * Класс для валидации ввода и разбора выражений.
  */
 class ExpressionValidator {
-    public Operation parse(String input) {
+    public Operation parse(String input) throws ValidationException {
         if (input == null || input.isEmpty()) {
             throw new ValidationException("Пустая строка.");
         }
@@ -235,10 +260,10 @@ class ExpressionValidator {
         };
     }
 
-    private double toNumber(String s) {
+    private double toNumber(String s) throws ValidationException {
         try {
             return Double.parseDouble(s.replace(',', '.'));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             throw new ValidationException("Не число: " + s);
         }
     }
@@ -246,7 +271,7 @@ class ExpressionValidator {
     /**
      * Разделяем выражение на 3 части: левое число, оператор, правое число.
      */
-    private String[] splitIntoThree(String s) {
+    private String[] splitIntoThree(String s) throws ValidationException {
         String[] parts = s.split("\\s+"); // делим выражение по пробелам
         if (parts.length == 3) {                // если сразу удалось получить 3 значения, возвращаем без валидации
             return parts;
@@ -270,7 +295,7 @@ class ExpressionValidator {
                         toNumber(left);
                         return new String[]{left, op, right};
                     }
-                } catch (ValidationException ve) {
+                } catch (ValidationException _) {
                    // Обработка ситуации типа 10/-2.
                    // Без попытки toNumber() получим
                    // left = "10/" right = "2" op = "-"

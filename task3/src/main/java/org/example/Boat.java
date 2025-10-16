@@ -17,5 +17,5 @@ public final class Boat extends WaterTransport implements EnginePowered {
     @Override public Engine getEngine() { return engine; }
     @Override public int getFuelLevel() { return fuel; }
     @Override public int getFuelCapacity() { return tank; }
-    @Override public void setFuelLevel(int value) { fuel = Math.max(0, Math.min(tank, value)); }
+    @Override public void setFuelLevel(int value) { fuel = Math.clamp(0, value, tank); }
 }

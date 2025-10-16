@@ -111,7 +111,7 @@ public class Calculator {
             Double.parseDouble(parts[0]);
             Double.parseDouble(parts[1]);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             return false;
         }
     }
